@@ -1,8 +1,8 @@
-![HenryLogo](https://d31uz8lwfmyn8g.cloudfront.net/Assets/logo-henry-white-lg.png)
+<h1><img src="https://d31uz8lwfmyn8g.cloudfront.net/Assets/logo-henry-white-lg.png" /></h1>
 
 # Prep Course
 
-#### Introducción
+## Introducción
 
 ¡Hola! Bienvenido al Prep Course para la carrera de Desarrollo Web Full Stack
 
@@ -12,7 +12,7 @@ En este curso introductorio podrás aprender todo el contenido que luego será e
 
 El Prep Course, o curso preparatorio, es un curso que diseñamos desde Henry con la finalidad de nivelar a todos nuestros aplicantes. La idea es que con este curso puedas dar tus primeros pasos en tecnología y así aprender esos conceptos básicos que serán necesarios para cuando estés dentro de la carrera.
 
-#### ¿En qué consiste el Prep Course?
+### ¿En qué consiste el Prep Course?
 
 El curso consiste en una serie de videos, material escrito y ejercicios para que puedas ir aprendiendo estos conceptos básicos de Javascript, HTML y CSS. Todo el material se encuentra **aquí en la parte superior de la página**, iniciando por la sección de **"Intro"** y finalizando en la sección del **"Challenge"**.
 
@@ -32,7 +32,7 @@ Más adelante te explicaremos cómo usar la herramienta.
 
 **Clases de apoyo en vivo:** de lunes a viernes hay un espacio en vivo via Zoom con estudiantes avanzados que se postulan para responder todas tus consultas.
 
-#### Entonces, ¿qué debo hacer ahora para avanzar con el proceso?
+## Entonces, ¿qué debo hacer ahora para avanzar con el proceso?
 
 Debes comenzar a ver todos los videos, el material escrito y a hacer los ejercicios, siguiendo el orden postulado aquí en el curso. Una vez que hayas finalizado, podrás realizar el Henry Challenge.
 
@@ -51,14 +51,10 @@ Si no puedes asistir al espacio en vivo, podrás ver la grabación. Puedes encon
 
 Te compartimos esta grabación del último Open House que hicimos en nuestro canal de Youtube. En este video podrás conocer más sobre Henry, la carrera y el proceso de admisión:
 
-<div class="iframeContainer">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/p_Hb0_v8SAc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+[Video Open House](https://www.youtube.com/embed/p_Hb0_v8SAc)
 
 ## ¿Quieres conocer más sobre la carrera de Desarrollo Web Full Stack en Henry?
 
 En este video te explicamos todo lo que debes conocer:
 
-<div class="iframeContainer">
-<iframe src="https://player.vimeo.com/video/426051769" allow="autoplay; fullscreen"></iframe>
-</div>
+[Video Desarrollo Web Full Stack de Henry](https://player.vimeo.com/video/426051769)
