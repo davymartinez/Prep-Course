@@ -18,6 +18,23 @@
       - [Conditional statements](#conditional-statements)
       - [Bucles y saltos](#bucles-y-saltos)
       - [Expression statements](#expression-statements)
+  - [JavaScript I](#javascript-i)
+    - [Variables](#variables)
+    - [console.log()](#consolelog)
+    - [Tipos de datos](#tipos-de-datos)
+      - [string](#string)
+      - [numbers](#numbers)
+      - [boolean](#boolean)
+    - [Operadores](#operadores)
+      - [Precedencia de operadores y asociatividad](#precedencia-de-operadores-y-asociatividad)
+    - [Objetos globales y métodos](#objetos-globales-y-métodos)
+      - [Math](#math)
+      - [String](#string-1)
+    - [Introducción a las funciones](#introducción-a-las-funciones)
+      - [Anatomía de una función](#anatomía-de-una-función)
+      - [Argumentos](#argumentos)
+      - [Declaración return y scope](#declaración-return-y-scope)
+    - [Control de flujo y operadores de comparación](#control-de-flujo-y-operadores-de-comparación)
 
 ## Expressions vs Statements en JavaScript
 
@@ -221,3 +238,263 @@ var a = var b; // esto arroja un error, ya que no se puede usar un statement en 
 
 console.log(var a); // otro error: solo se pueden pasar expresiones como argumentos de funciones
 ```
+
+## JavaScript I
+
+Conceptos básicos:
+
+### Variables
+
+Una variable es una forma de almacenar algo. En JS no necesitamos declarar los tipos de las variables al iniciarlas (es un lenguaje de tipado dinámico). Existen tres formas de declararlas:
+
+- **var**: es la forma principal de declarar variables en ES5 (versión de JS lanzada en 2009)
+- **let**: es la forma principal de declarar variables en ES6 (versión de JS lanzada en 2016)
+- **const**: es la forma de declarar constantes, es decir, valores que no se pueden cambiar
+
+### console.log()
+
+Es un método que nos permite imprimir por consola los valores que indiquemos dentro de los paréntesis.
+
+### Tipos de datos
+
+Los tipos de datos nos indican qué valores pueden tomar las variables y qué operaciones se pueden realizar con ellas. En JS los tipos de datos más usados son:
+
+#### string
+
+Son bloques de texto (incluyendo caracteres solos como "a", "b", o "c") que se definen entre comillas:
+
+```javascript
+var miPerro = "Dexter";
+```
+
+#### numbers
+
+Son valores numéricos, los cuales pueden ser negativos y que tienen un rango de +/-9007199254740991. Nota: un número encerrado entre comillas ("101") se convierte en un string:
+
+```javascript
+var numPositivo = 202;
+var numNegativo = -303;
+```
+
+#### boolean
+
+Son variables lógicas, derivadas del álgebra booleana y se usan para determinar que algo es verdadero (`true`) o falso (`false`).
+
+```javascript
+var esVerdadero = true;
+var esFalso = false;
+```
+
+### Operadores
+
+Son símbolos que ya conocemos: `+` (suma), `-` (resta), `*` (multiplicación) y `/` (división), aparte de algunos otros como `**` (potenciación), `%` (módulo), `++` (incremento) y `--` (decremento).
+
+```javascript
+var suma = 1 + 2 // 3;
+var resta = 2 - 1 // 1;
+var multi = 2 * 3 // 6
+var division = 4 / 2 // 2;
+var potencia = 2**3 // 8;
+var modulo = 10 % 3 // 1;
+```
+
+**Nota**: esta forma de asignar operaciones (`a + b`) se conoce como "notación `infix`". Otras dos formas son la `prefix (+ a b)` y la `postfix (a b +)`.
+
+#### Precedencia de operadores y asociatividad
+
+La precedencia de operadores es el orden en el cual se ejecutan las operaciones. Existe un [orden de precedencia](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#table) que nos indica cuál operación realizar primero y cuáles a continuación.
+
+Por ejemplo, en `3 + 4 * 5` primero se ejecuta la multiplicación de `4 * 5` y luego, a ese resultado, se le suma `3`, ya que la multiplicación tiene precedencia sobre la suma.
+
+La asociatividad es el orden en que se ejecutan los operadores cuando tienen la misma precedencia, la cual puede ser de derecha a izquierda o izquierda a derecha.
+
+Por ejemplo:
+
+```javascript
+var a = 1, b = 2, c = 3;
+a = b = c;
+console.log(a, b, c);
+```
+
+La salida de `console.log` será `3`, ya que el operador `=` tiene asociatividad de derecha a izquierda, por lo tanto, primero asigna el valor original de `c` a `b` (`3`) y luego lo vuelve a asignar a la variable `a`.
+
+### Objetos globales y métodos
+
+En JavaScript, los objetos globales, también conocidos como objetos incorporados o integrados, son objetos que proporcionan una serie de métodos que podemos usar para extender las capacidades del lenguaje.
+
+#### Math
+
+`Math` es un objeto incorporado que incluye propiedades y métodos para trabajar con constantes y funciones matemáticas. Algunos de sus métodos más usados son:
+
+- `Math.pow`: eleva un número a un exponente
+- `Math.round`: redondea un número a su entero más cercano
+- `Math.floor`: redondea un número a su más cercano *hacia abajo*
+- `Math.ceil`: redondea un número a su más cercano *hacia arriba*
+
+Ejemplos:
+
+```javascript
+Math.pow(2,3) // 8;
+Math.round(6.5) // 7;
+Math.round(6.4) // 6;
+Math.floor(6.6) // 6;
+Math.ceil(6.4) // 7; 
+```
+
+#### String
+
+`String` es un objeto útil para almacenar datos que se pueden representar en forma de texto. Entre sus propiedades y métodos más usados están:
+
+- `length`: chequea la longitud de una cadena de texto
+- `+` y `+=`: concatena cadenas de texto
+- `indexOf()`: chequea la existencia o ubicación de subcadenas de texto y devuelve su índice si encuentra la subcadena o `-1` si no la encuentra
+- `substring()`: extrae subcadenas de texto entre un índice inicial y otro final
+
+Ejemplos:
+
+```javascript
+var string01 = "Esta es mi cadena";
+var string02 = "de texto";
+console.log(string01.length); // 17
+
+var string03 = string01 + " " + string02;
+console.log(string03 + " " + "nueva"); // Esta es mi cadena de texto nueva
+
+var string04 = "Esta es otra cadena de texto";
+console.log(string04.indexOf("texto")); // 23
+console.log(string04.indexOf("nueva")); // -1
+
+console.log(string04.substring(1, 2)); // s
+console.log(string04.substring(0, 7)); // Esta es
+console.log(string04.substring(8)); // otra cadena de texto
+```
+
+### Introducción a las funciones
+
+En JS las funciones son tipos particulares de objetos, llamados callable objects (u objetos invocables). Nos permiten almacenar fragmentos de código que hagan una tarea única y dentro de un bloque definido, para luego invocar dicho código cuando se necesite usando un solo comando, en vez de tener que escribir el mismo código varias veces.
+
+Existen tres formas de construir o declarar una función:
+
+```javascript
+// declaración de función (function declaration)
+function miFuncion() {
+    // bloque de código
+};
+
+// expresión de función (function expression)
+var otraFuncion = function() {
+    // bloque de código
+};
+
+// función flecha (arrow function)
+var otraFuncionMas = () => {
+    // bloque de código
+};
+```
+
+#### Anatomía de una función
+
+Una declaración de función comienza con la palabra clave `function`, luego viene el nombre de la función, el cual debe describir lo que esta hace. Luego vienen los paréntesis, en donde podemos incluir parámetros y/o argumentos y finalmente los corchetes, donde va el bloque de código a ejecutar:
+
+```javascript
+function logHola() {
+    console.log("Hola!");
+}
+
+logHola(); // "Hola!"
+```
+
+#### Argumentos
+
+Los argumentos son variables que podemos pasar a una función al momento de invocarla para hacer algo con ellas:
+
+```javascript
+function logHola(nombre) {
+    console.log("Hola, " + nombre + "!");
+}
+
+logHola("David"); // "Hola, David!"
+```
+
+Nota: en el ejemplo anterior `nombre` es un parámetro y `"David"` un argumento (aunque en la práctica se suelen usar ambos términos de manera intercambiable).
+
+También podemos pasar otras variables como argumentos:
+
+```javascript
+function logHola(nombre) {
+    console.log(`Hola, $(nombre)!`);
+}
+var miNombre = "David";
+logHola(miNombre); // "Hola, David!"
+```
+
+En el ejemplo anterior, la forma \`Hola, $(nombre)!\` es lo que se conoce como una plantilla literal (*literal template*) o plantilla de cadena (*string template*).
+
+Igualmente, podemos pasar varios argumentos a una función separándolos con comas:
+
+```javascript
+function sumarDosNumeros(num1, num2) {
+    var suma = num1 + num2;
+    return suma;
+}
+
+sumarDosNumeros(1, 9); // 10
+```
+
+#### Declaración return y scope
+
+La declaración `return` nos devuelve el valor que arroje una función, siempre que lo hayamos especificado (en caso contrario, la función devuelve `undefined`). No podemos acceder a ninguna otra variable o valor dentro de una función, solo al valor que tenga un `return` y esto es lo que se conoce como el "*scope*" o alcance de una función, su contexto de ejecución: las variables declaradas dentro de una función solo tienen alcance dentro de la misma.
+
+Igualmente, cuando el flujo de ejecución de una función llega a una declaración de `return`, detiene dicha ejecución y nos devuelve el valor en cuestión.
+
+```javascript
+function multiplicarDosNumeros(num1, num2) {
+    var producto = num1 * num2;
+    return producto;
+}
+
+console.log(multiplicarDosNumeros(2, 10)); // 20
+console.log(num1) // undefined
+console.log(producto) // undefined
+```
+
+También podemos declarar variables que llamen a funciones y nos devuelvan el valor de estas:
+
+```javascript
+function dividirDosNumeros(num1, num2) {
+    var cociente = num1 * num2;
+    return cociente;
+}
+
+var division = multiplicarDosNumeros(10, 2);
+console.log(division) // 5
+```
+
+### Control de flujo y operadores de comparación
+
+El control de flujo es una forma que tiene nuestra función de verificar si algo es cierto (`true`) o falso (`falso`) y avanzar o no, dependiendo de la condición, mediante un `if-else`:
+
+```javascript
+function esMayorDeEdad(edad) {
+    if (edad > 18) {
+        return true;
+    }
+    return false;
+}
+
+esMayorDeEdad(17); // false
+esMayorDeEdad(19); // true
+```
+
+La función anterior verifica si la condición `(edad > 18)` es cierta, en cuyo caso se detiene y devuelve `true`. De no ser así, devuelve `false`.
+
+Los operadores de comparación son:
+
+- `<`
+- `<=`
+- `>`
+- `>=`
+- `==`
+- `===`
+- `!=`
+- `!==`
