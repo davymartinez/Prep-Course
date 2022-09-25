@@ -35,6 +35,20 @@
       - [Argumentos](#argumentos)
       - [Declaración return y scope](#declaración-return-y-scope)
     - [Control de flujo y operadores de comparación](#control-de-flujo-y-operadores-de-comparación)
+  - [JavaScript II](#javascript-ii)
+    - [undefined y null](#undefined-y-null)
+    - [Veracidad](#veracidad)
+    - [Operadores de comparación (cont.)](#operadores-de-comparación-cont)
+    - [Flujos de control (cont.)](#flujos-de-control-cont)
+    - [Operadores lógicos](#operadores-lógicos)
+      - [Operador `&&`](#operador-)
+      - [Operador `||`](#operador--1)
+      - [Operador `!`](#operador--2)
+      - [Notas sobre operadores lógicos](#notas-sobre-operadores-lógicos)
+    - [Bucles `for`](#bucles-for)
+      - [El operador `++`](#el-operador-)
+      - [Bucles infinitos](#bucles-infinitos)
+    - [El objeto `arguments`](#el-objeto-arguments)
 
 ## Expressions vs Statements en JavaScript
 
@@ -472,7 +486,7 @@ console.log(division) // 5
 
 ### Control de flujo y operadores de comparación
 
-El control de flujo es una forma que tiene nuestra función de verificar si algo es cierto (`true`) o falso (`falso`) y avanzar o no, dependiendo de la condición, mediante un `if-else`:
+El control de flujo es una forma que tiene nuestra función de verificar si algo es cierto (`true`) o falso (`falso`) y avanzar o no, dependiendo de la condición, mediante una declaración `if`:
 
 ```javascript
 function esMayorDeEdad(edad) {
@@ -498,3 +512,191 @@ Los operadores de comparación son:
 - `===`
 - `!=`
 - `!==`
+
+## JavaScript II
+
+### undefined y null
+
+`undefined` es una variable a la cual no se le ha asignado un valor, es decir, es indefinida. Los métodos y declaraciones también retornan `undefined` si la variable evaluada no tiene un valor asignado. Las funciones también retornan `undefined` si no tienen un valor que devolver.
+
+Por su parte, `null` representa la ausencia intencional de un valor, indica que una variable no apunta a ningún objeto. Se puede decir que `undefined` viene establecido por JS, mientras que `null` lo define el desarrollador.
+
+Ejemplos:
+
+```javascript
+console.log(estaVariableNoExiste); // undefined
+
+var numeroTlf = "55-5555-12-34";
+numeroTlf = null;
+console.log(numeroTlf); // null
+```
+
+### Veracidad
+
+Cuando se usa una declaración que espera un valor booleano, `true` o `false`, pero la expresión dada no es un valor tal, JS realiza una "coerción de tipo" para transformar dicho valor a un booleano. Estos valores son llamados "*truthy*" y "*falsey*". Cada tipo de dato tiene una veracidad *truthy* o *falsey*.
+
+- Datos *truthy* o que son forzados a `true`:
+  - `true`
+  - `1`
+  - `" "`
+  - `[]` (array)
+  - `{}` (objeto)
+  - `function(){}`
+- Datos *falsey* o que son forzados a `false`:
+  - `false`
+  - `0`
+  - `undefined`
+  - `null`
+  - `""` (cadena vacía)
+
+### Operadores de comparación (cont.)
+
+Los operadores de comparación tienen la misma funcionalidad que sus equivalentes matemáticos y así nos sirven para evaluar o comparador dos expresiones:
+
+```javascript
+1 > 2; // false
+3 < 5; // true
+8 >= 8; // true
+21 <= 13 // false
+```
+
+El operador de igualdad, `==`, sirve para comparar si dos operandos son iguales o no y retorna un resultado booleano. Mientras que el operador de igualdad estricta, `===`, sirve para comparar valores y tipos a la vez, igualmente retornando un booleano. Es mejor práctica usar la igualdad estricta ya que nos permite hacer comparaciones más completas.
+
+```javascript
+1 == 1; // true
+1 == "1"; // true
+1 === 1; // true
+1 === "1"; // false
+"perro" == "perro"; // true
+"perro" === "perro"; // true
+"Perro" == "perro"; // false
+"Perro" === "perro"; // false
+```
+
+Por su parte, el operador de desigualdad, `!=`, nos permite comparar si dos operandos son desiguales o no, retornando un resultado booleano. De forma análoga al caso de la igualdad, también tenemos la desigualdad estricta, `!==`, que nos permite verificar desigualdad a nivel de valores y tipos.
+
+```javascript
+1 !== 1; // false
+1 !== "1"; // true
+"perro" !== "perro"; // false
+"Perro" !== "perro"; // true
+```
+
+### Flujos de control (cont.)
+
+En la sección anterior describimos el flujo de control de la declaración `if`, pero solo para el caso más sencillo, cuando no hay necesidad de bifurcar la condición. Para este último caso, contamos con la declaración `if...else`: si la condición especificada es "truthy", se ejecuta un código determinado, y si es "falsey", se ejecuta otro código incluido en una cláusula `else`:
+
+```javascript
+if (false) {
+    console.log("Este código no se ejecutará");
+} else if (false) {
+    console.log("Este código tampoco se ejecutará");
+} else {
+    console.log("Este código se ejecutará");
+}
+```
+
+### Operadores lógicos
+
+Los operadores lógicos nos permiten hacer evaluaciones y operaciones booleanas tales como la conjunción (∧), la disyunción (∨) y la negación (¬) lógicas.
+
+#### Operador `&&`
+
+Este es el operador que corresponde a la conjunción lógica (Y / AND). Evalúa dos expresiones y devuelve `true` si y solo si ambas son `true`:
+
+```javascript
+if (100 > 10 && 10 === 10) {
+    console.log("Ambas declaraciones son ciertas: el código se ejecutará");
+} 
+
+if (10 === 9 && 10 > 9) {
+    console.log("Una de las declaraciones es falsa: el código no se ejecutará");
+}
+```
+
+#### Operador `||`
+
+Este es el operador que corresponde a la disyunción lógica (O / OR). Evalúa dos expresiones y devuelve `true` si alguna (o ambas) de las dos es `true`:
+
+```javascript
+if (100 > 10 || 10 === 10) {
+    console.log("Ambas declaraciones son ciertas: el código se ejecutará");
+}
+
+if (10 === 9 && 10 > 9) {
+    console.log("Una de las declaraciones es cierta: el código se ejecutará");
+}
+
+if (10 === 9 && 1 > 9) {
+    console.log("Ambas declaraciones son falsas: el código no se ejecutará");
+}
+```
+
+#### Operador `!`
+
+Este es el operador que corresponde a la negación lógica (NO / NOT). Evalúa una expresión y devuelve el valor booleano opuesto:
+
+```javascript
+if (!false) {
+    console.log("El ! devolverá true porque es lo contrario de false: el código se ejecutará");
+}
+
+if (!(1 === 1)) {
+    console.log("1 es igual a 1, lo cual devuelve true, pero el ! devuelve lo contrario, false: el código no se ejecutará");
+}
+```
+
+#### Notas sobre operadores lógicos
+
+- Las expresiones se evalúan en orden:
+  - En una declaración `&&`, si la primera expresión es `false` la segunda no se evaluará porque ambas tienen que ser `true`.
+  - En una declaración `||`, si la primera expresión es `true` la segunda no se evaluará porque solo una necesita ser `true`.
+- Todas las expresiones que estén dentro de paréntesis se evalúan primero. Si usamos un operador `!` seguido de una expresión en paréntesis, el mismo devolverá lo opuesto de lo que se evalúe dentro del paréntesis.
+
+### Bucles `for`
+
+La declaración `for` crea un bucle que consiste en tres expresiones opcionales, encerradas entre paréntesis y separadas por puntos y comas, seguidas de una declaración que se ejecuta dentro del bucle. Estas tres expresiones opcionales son: una declaración de variable (`let i = 0`) sobre la cual se repetirá el bucle, luego una expresión condicional (`i < 10`) y finalmente un incremento de la variable declarada (`i++`). El bucle se repite hasta que la expresión condicional se evalúe a `false`. Ejemplo:
+
+```javascript
+for (let i = 0; i < 10; i++) {
+    console.log(i); // se imprime el valor de i por consola 10 veces, de 0 a 9
+}
+```
+
+#### El operador `++`
+
+A `++` se le conoce como el operador de incremento y aumenta su operando (le suma uno) y retorna el valor antes o después del incremento, dependiendo de donde esté ubicado el operador (`i++` o `++i`).
+
+#### Bucles infinitos
+
+Si un bucle no tiene una forma válida de finalizar, entra en lo que se conoce como un bucle infinito, una condición mediante la cual el bucle se repite una y otra vez, sin finalizar, lo cual puede consumir toda la memoria de una computadora. En el siguiente bucle `for` la condición siempre es `true` (`ì` siempre será mayor que 0), por lo que el bucle nunca termina:
+
+```javascript
+for (let i = 0; i >= 0; i++) {
+    console.log(i);
+}
+```
+
+### El objeto `arguments`
+
+Este es un objeto parecido a un `Array`, accesible dentro de las funciones y que contiene los valores de los argumentos pasados a dicha función.
+
+```javascript
+function func(a, b, c) {
+    console.log(arguments[0]);
+    console.log(arguments[1]);
+    console.log(arguments[2]);
+}
+func(1,2,3);
+// 1
+// 2
+// 3
+```
+
+La propiedad `.length` permite saber cuántos parámetros puede recibir una función:
+
+```javascript
+function func(a, b, c) {
+    console.log(arguments.length);
+}
+// 3
