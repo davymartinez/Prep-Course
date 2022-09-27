@@ -49,6 +49,15 @@
       - [El operador `++`](#el-operador-)
       - [Bucles infinitos](#bucles-infinitos)
     - [El objeto `arguments`](#el-objeto-arguments)
+  - [JavaScript III](#javascript-iii)
+    - [Introducción a los arrays](#introducción-a-los-arrays)
+      - [`.length`](#length)
+      - [Acceso a elementos en un array](#acceso-a-elementos-en-un-array)
+      - [Asignación de elementos a un array](#asignación-de-elementos-a-un-array)
+      - [`.push()` y `.pop()`](#push-y-pop)
+      - [`.unshift()` y `.shift()`](#unshift-y-shift)
+      - [Notas sobre matrices](#notas-sobre-matrices)
+    - [Uso de bucles `for` en arrays](#uso-de-bucles-for-en-arrays)
 
 ## Expressions vs Statements en JavaScript
 
@@ -700,3 +709,113 @@ function func(a, b, c) {
     console.log(arguments.length);
 }
 // 3
+```
+
+## JavaScript III
+
+### Introducción a los arrays
+
+Los arrays (también llamados en español arreglos o matrices) son como contenedores para almacenar colecciones de datos. Su declaración es sencilla, simplemente se asigna un nombre de variable y se declaran los datos dentro de un par de corchetes, `[` y `]`. Incluso se pueden declarar como arrays vacíos, si no se incluyen datos dentro de los corchetes.
+
+```javascript
+var arrayDeEstudiantes = ["Ana", "Bautista", "Carla", "David"];
+var arrayVacio = [];
+```
+
+#### `.length`
+
+La propiedad `.length` nos permite acceder a la longitud de un array, funcionando igual que como la misma propiedad de las strings.
+
+```javascript
+var arrayDeEstudiantes = ["Ana", "Bautista", "Carla", "David"];
+console.log(arrayDeEstudiantes.length); // 4
+```
+
+#### Acceso a elementos en un array
+
+Podemos acceder a los elementos de un array mediante su índice, el cual representa la posición de cada elemento dentro del arreglo y siempre contando a partir de 0. Esto quiere decir que el primer elemento de un array siempre es el `[0]`, el segundo el `[1]`, el tercero el `[2]` y así sucesivamente.
+
+```javascript
+var arrayDeEstudiantes = ["Ana", "Bautista", "Carla", "David"];
+console.log(arrayDeEstudiantes[0]); // "Ana"
+console.log(arrayDeEstudiantes[3]); // "David"
+console.log(arrayDeEstudiantes[4]); // undefined
+```
+
+Podemos acceder dinámicamente al último elemento de un array, si no sabemos su longitud, mediante la propiedad `.length`. Sin embargo, como `.length` nos devuelve el número de elementos del arreglo y estos comienzan desde 0, debemos restarle uno al tamaño del array para acceder correctamente al último elemento:
+
+```javascript
+var arrayDeEstudiantes = ["Ana", "Bautista", "Carla", "David"];
+console.log(arrayDeEstudiantes[arrayDeEstudiantes.length - 1]); // "David"
+```
+
+#### Asignación de elementos a un array
+
+Podemos asignar y/o modificar elementos de un array de forma directa, indicando el índice y el nuevo valor deseado:
+
+```javascript
+var arrayDeEstudiantes = ["Ana", "Bautista", "Carla", "David"];
+arrayDeEstudiantes[0] = "Aura";
+arrayDeEstudiantes[4] = "Elena";
+console.log(arrayDeEstudiantes); // Array(5) [ "Aura", "Bautista", "Carla", "David", "Elena" ]
+```
+
+#### `.push()` y `.pop()`
+
+El método `.push()` permite agregar un nuevo elemento al final del array, incrementando así su longitud en 1. Este método devuelve la nueva longitud del array luego del "*push*":
+
+```javascript
+var arrayDeEstudiantes = ["Ana", "Bautista", "Carla", "David"];
+console.log(arrayDeEstudiantes.push("Elena")); // 5
+console.log(arrayDeEstudiantes); // Array(5) [ "Ana", "Bautista", "Carla", "David", "Elena" ]
+```
+
+Por su parte, el método `.pop()` elimina el último elemento del array, disminuyendo su longitud en 1. Este método devuelve el elemento eliminado o "*popped*":
+
+```javascript
+var arrayDeEstudiantes = ["Ana", "Bautista", "Carla", "David"];
+console.log(arrayDeEstudiantes.pop()); // "David"
+console.log(arrayDeEstudiantes); // Array(3) [ "Ana", "Bautista", "Carla" ]
+```
+
+#### `.unshift()` y `.shift()`
+
+Estos dos métodos son equivalentes a `.push()` y `.pop()` pero para el primer elemento del array. Así, `.unshift()` colocará un nuevo elemento al inicio del array y devolverá la nueva longitud del mismo:
+
+```javascript
+var arrayDeEstudiantes = ["Ana", "Bautista", "Carla", "David"];
+console.log(arrayDeEstudiantes.unshift("Zacarías")); // 5
+console.log(arrayDeEstudiantes); // Array(5) [ "Zacarías", "Ana", "Bautista", "Carla", "David" ]
+```
+
+Por su parte, `.shift()` elimina el primer elemento del array y devuelve el mismo:
+
+```javascript
+var arrayDeEstudiantes = ["Ana", "Bautista", "Carla", "David"];
+console.log(arrayDeEstudiantes.shift()); // "Ana"
+console.log(arrayDeEstudiantes); // Array(3) [ "Bautista", "Carla", "David" ]
+```
+
+#### Notas sobre matrices
+
+Al igual que JS, que no es un lenguaje fuertemente tipado, los arrays en dicho lenguaje tampoco necesitan contener el mismo tipo de datos:
+
+```javascript
+var arrayMixto = [1, "David", 3.1415, function(){}, [1,2,3], null, undefined];
+```
+
+### Uso de bucles `for` en arrays
+
+Podemos utilizar bucles `for` para iterar sobre los elementos de un array, mediante la propiedad `.length` como condición de parada del bucle:
+
+```javascript
+var arrayDeEstudiantes = ["Ana", "Bautista", "Carla", "David"];
+
+for (let i = 0;  i < arrayDeEstudiantes.length; i++) {
+    console.log(arrayDeEstudiantes[i]);
+}
+// "Ana"
+// "Bautista" 
+// "Carla"
+// "David"
+```
