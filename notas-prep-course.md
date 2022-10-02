@@ -58,6 +58,18 @@
       - [`.unshift()` y `.shift()`](#unshift-y-shift)
       - [Notas sobre matrices](#notas-sobre-matrices)
     - [Uso de bucles `for` en arrays](#uso-de-bucles-for-en-arrays)
+  - [JavaScript IV](#javascript-iv)
+    - [Objetos](#objetos)
+      - [Introducción a los objetos](#introducción-a-los-objetos)
+        - [Pares *key:value* (clave:valor)](#pares-keyvalue-clavevalor)
+        - [Acceder a los valores de un objeto](#acceder-a-los-valores-de-un-objeto)
+        - [Asignación de valores a un objeto](#asignación-de-valores-a-un-objeto)
+        - [Eliminar valores de un objeto](#eliminar-valores-de-un-objeto)
+      - [Métodos](#métodos)
+      - [Bucle `for...in`](#bucle-forin)
+      - [La palabra clave `this`](#la-palabra-clave-this)
+        - [`this` y el contexto de ejecución](#this-y-el-contexto-de-ejecución)
+      - [Objetos en JavaScript](#objetos-en-javascript)
 
 ## Expressions vs Statements en JavaScript
 
@@ -819,3 +831,237 @@ for (let i = 0;  i < arrayDeEstudiantes.length; i++) {
 // "Carla"
 // "David"
 ```
+
+## JavaScript IV
+
+### Objetos
+
+#### Introducción a los objetos
+
+Los objetos son contenedores de datos, al igual que los arrays, pero, a mientros estos últimos contienen múltiples elementos relacionados unos con otros, los objetos contienen información sobre un solo elemento. Se declaran usando llaves: `const nuevoObjeto = {}`.
+
+##### Pares *key:value* (clave:valor)
+
+Los elementos contenidos en un objeto se agrupan en los llamados pares *key:value* o clave:valor. La clave o key es el identificador, mientras que el valor o value es, como indica su nombre, el valor que queremos asignar a la clave. Los objetos pueden contener muchos pares *key:value*, los cuales se separan por comas y se suelen escribir en líneas separadas. Cada clave tiene que ser única dentro de un objeto, más no sus respectivos valores, es decir, varias claves pueden tener el mismo valor, más no lo contrario. Los valores pueden ser cualquier tipo de dato válido en JS: cadenas, números, booleanos, arrays, funciones o, incluso, otros objetos:
+
+```javascript
+const usuario = {
+    nombreUsuario: 'juan.perez',
+    password: 'loremipsum;123',
+    leGustaJavaScript: true,
+    numeroFavorito: 42
+};
+```
+
+##### Acceder a los valores de un objeto
+
+Existen dos formas de acceder a los valores de un objeto: mediante la notación de puntos o mediante corchetes. Con la notación de puntos escribimos la clave y el valor unidos por un punto:
+
+```javascript
+usuario.nombreUsuario // 'juan.perez'
+usuario.password // ´loremipsum;123´
+```
+
+Mediante la notación de corchetes, escribimos la clave seguida del valor encerrado entre corchetes y entre comillas:
+
+```javascript
+usuario['nombreUsuario'] // 'juan.perez'
+usuario['password'] // ´loremipsum;123´
+```
+
+Esta última notación también se suele usar con variables:
+
+```javascript
+const cadenaPassword = 'password';
+usuario[cadenaPassword] // ´loremipsum;123´
+```
+
+##### Asignación de valores a un objeto
+
+Los valores se asignan a un objeto de la misma manera como se acceden, es decir, con puntos o con corchetes:
+
+```javascript
+const nuevoUsuario = {
+    esNuevo : true,
+};
+
+const gustaJS = 'leGustaJavaScript';
+
+nuevoUsuario.nombreUsuario = 'john.doe';
+nuevoUsuario['password'] = '12345';
+nuevoUsuario[gustaJS] = true;
+```
+
+##### Eliminar valores de un objeto
+
+Para eliminar un valor de un objeto usamos la palabra clave `delete`:
+
+```javascript
+const nuevoObjeto = {
+    eliminarEstaPropiedad: true
+};
+
+delete nuevoObjeto.eliminarEstaPropiedad;
+```
+
+#### Métodos
+
+Las funciones almacenadas dentro de objetos se llaman métodos. En estos casos las claves son el nombre de la función y su valor es la función en sí. Estos métodos se invocan con notación de puntos:
+
+```javascript
+const nuevoObjeto = {
+    decirHola: function() {
+        console.log("Hola a todo el mundo!");
+    }
+};
+
+nuevoObjeto.decirHola(); // "Hola a todo el mundo!"
+```
+
+#### Bucle `for...in`
+
+El bucle `for...in` sirve para iterar o recorrer los pares *key:value* de un objeto. Su declaración tiene la forma `for (variable in objeto) {declaración}`, en donde `variable` recibe una propiedad del objeto en cada iteración, `objeto` es el objeto en cuestión sobre el cual vamos a iterar y la `declaración` es lo que se va a ejecutar en cada iteración:
+
+```javascript
+const usuario = {
+    nombreUsuario: 'juan.perez',
+    password: 'loremipsum;123',
+    amaJavaScript: true,
+    numeroFavorito: 42
+};
+
+for (let clave in usuario) {
+    console.log(clave);
+    console.log(usuario[clave]);
+};
+
+// username
+// juan.perez
+// password
+// loremipsum;123
+// amaJavaScript
+// true
+// numeroFavorito
+// 42
+```
+
+#### La palabra clave `this`
+
+Cuando se usa dentro de un objeto, la palabra clave `this` nos permite acceder a claves de ese mismo objeto. Cuando invocamos a una función como método de un objeto, su `this` se refiere al objeto del cual invocamos dicho método:
+
+```javascript
+const usuario = {
+    nombreUsuario: 'juan.perez',
+    password: 'loremipsum;123',
+    amaJavaScript: true,
+    numeroFavorito: 42,
+    decirHola: function() {
+        console.log(this.nombreUsuario + ' manda saludos!');
+    }
+};
+
+usuario.decirHola(); // 'juan.perez manda saludos!'
+```
+
+##### `this` y el contexto de ejecución
+
+- **Contexto global**: cuando ejecutamos código fuera de una función decimos que estamos dentro del contexto global (o el objeto `global`). En el caso del navegador, hace referencia al objeto `window`:
+
+```javascript
+console.log(this === window);
+true
+
+this.a = 37;
+
+console.log(window.a);
+37
+```
+
+- **Contexto de función**: cuando ejecutamos código dentro de una función, el valor de `this` dependerá de cómo invoquemos dicha función.
+
+```javascript
+function f1() {
+    return this;
+}
+
+f1() === window; // la función es invocada por el objeto global, por lo tanto hace referencia a window
+true
+
+window.f1() === window;
+true
+```
+
+En el modo [`strict`](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Strict_mode) el ejemplo anterior devuelve `undefined` ya que este modo no permite asumir que `this` es el objeto `global`.
+
+- **Como método de un objeto**: cuando ejecutamos código dentro de una función que a su vez es método de un objeto, `this` hace referencia al objeto sobre el cual se llamó dicho método.
+
+```javascript
+var o = {
+    prop: 37,
+    f: function() {
+        return this.prop;
+    }
+};
+
+console.log(o.f());
+37 // this hace referencia a 'o'
+```
+
+En el siguiente ejemplo definimos la función fuera del objeto, para luego "agregársela" como método, en cuyo caso `this` seguirá haciendo referencia al objeto:
+
+```javascript
+var o = { prop: 37 };
+
+function loguea() {
+    return this.prop;
+}
+
+o.f = loguea; // agregamos la función como método al objeto 'o'
+
+console.log(o.f());
+37 // el resultado es el mismo
+```
+
+Em el siguiente ejemplo, el primer `this` hace referencia a la variable `obj`, pero en la función `cambia()` estamos haciendo referencia al objeto global, ya no al `this` del primer objeto:
+
+```javascript
+var obj = {
+    nombre: "objeto",
+    log: function() {
+        this.nombre = "Cambiado"; // 'this' hace referencia a 'obj'
+        console.log(this); // "Cambiado"
+        
+        var cambia = function(str) {
+            this.nombre = str;
+        };
+        
+        cambia("Holaaa!!!");
+        console.log(this); // "Cambiado"
+    }
+};
+```
+
+Una forma de resolver esto, cuando no sabemos de antemano qué valor va a tomar `this`, es guardando la referencia al objeto:
+
+```javascript
+var obj = {
+    nombre: "objeto",
+    log: function() {
+        this.nombre = "Cambiado"; // 'this' hace referencia a 'obj'
+        console.log(this) // obj
+
+        var that = this; // guardamos la referencia a this
+
+        var cambia = function(str) {
+            that.nombre = str; // usamos la referencia dentro de la funcion
+        };
+
+        cambia("Holaaa!!!");
+        console.log(this);
+    }
+};
+```
+
+#### Objetos en JavaScript
+
+Todo en JS es un objeto: arrays, strings, funciones, el contexto global o `window`. Todos estos elementos son objetos con métodos y propiedades especiales.
