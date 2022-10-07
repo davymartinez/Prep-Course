@@ -70,6 +70,20 @@
       - [La palabra clave `this`](#la-palabra-clave-this)
         - [`this` y el contexto de ejecución](#this-y-el-contexto-de-ejecución)
       - [Objetos en JavaScript](#objetos-en-javascript)
+  - [JavaScript V](#javascript-v)
+    - [Funciones constructoras (*constructor functions*)](#funciones-constructoras-constructor-functions)
+    - [Clases](#clases)
+      - [Declaraciones de clase](#declaraciones-de-clase)
+      - [Expresiones de clase](#expresiones-de-clase)
+      - [Class e instanciación pseudoclásica](#class-e-instanciación-pseudoclásica)
+      - [`this` en las clases](#this-en-las-clases)
+    - [Prototype](#prototype)
+      - [`Object.create`](#objectcreate)
+      - [`Object.assign`](#objectassign)
+    - [Herencia clásica](#herencia-clásica)
+    - [Herencia en JavaScript](#herencia-en-javascript)
+      - [Herencia en funciones constructoras](#herencia-en-funciones-constructoras)
+      - [Herencia en ES6](#herencia-en-es6)
 
 ## Expressions vs Statements en JavaScript
 
@@ -1065,3 +1079,231 @@ var obj = {
 #### Objetos en JavaScript
 
 Todo en JS es un objeto: arrays, strings, funciones, el contexto global o `window`. Todos estos elementos son objetos con métodos y propiedades especiales.
+
+## JavaScript V
+
+### Funciones constructoras (*constructor functions*)
+
+Las funciones constructoras son el equivalente a las clases en muchos otros lenguajes de programación. También se les suele llamar tipos de referencia (reference types), clases, tipos de datos (data types) o simplemente constructores. Son un constructo que nos permite especificar propiedades y comportamientos (funciones) para luego crear múltiples objetos con dichas propiedades y comportamientos. Una analogía común es decir que las clases son como planos y los objetos son como las casas que se construyen a partir de dichos planos. Así como se pueden crear múltiples casas a partir de un solo plano, se pueden crear múltiples objetos a partir de una misma clase.
+
+Ejemplo de función constructora:
+
+```javascript
+function Persona(nombre, cargo) {
+    this.nombre = nombre;
+    this.cargo = cargo;
+}
+```
+
+Es una convención común nombrar a las funciones constructoras con mayúscula inicial, para que así se sepa que se debe invocar como tal.
+
+Las funciones constructoras se invocan usando la keyword `new`:
+
+```javascript
+const david = new Persona("David Martinez", "Editor de metadatos");
+const patricia = new Persona("Patricia Pérez", "Instructora");
+```
+
+Al invocar una función constructora con la keyword `new`, `this` se refiere al objeto que se está construyendo.
+
+### Clases
+
+Las clases en JS son especies de plantillas para crear objetos. Al igual que las funciones constructoras, las clases encapsulan los datos junto con código para trabajar con dichos datos. Y, también de la misma forma que las funciones constructoras, las clases nos sirven para crear muchos objetos que compartan algunas de las mismas características y métodos. La principal diferencia entre las clases y las funciones constructoras es la sintaxis de ambos constructos.
+
+Las clases se pueden entender como "funciones especiales" y su sintaxis tiene dos componentes: declaraciones de clase y expresiones de clase.
+
+#### Declaraciones de clase
+
+Para declarar una clase, se usa la keyword `class` con el nombre que se le dará a la clase y, como convención, estos nombres suelen ir con máyuscula inicial:
+
+```javascript
+class Rectangulo {
+    constructor(alto, ancho) {
+        this.alto = alto;
+        this.ancho = ancho;
+    }
+}
+```
+
+#### Expresiones de clase
+
+Las expresiones de clase pueden ser nombradas o anónimas. El nombre dado a una expresión de clase nombrada es local dentro de la clase, pero se puede acceder mediante la propiedad `name`.
+
+```javascript
+// anonima
+let Rectangulo = class {
+    constructor(alto, ancho) {
+        this.alto = alto;
+        this.ancho = ancho;
+    }
+};
+console.log(Rectangulo.name); // "Rectangulo"
+
+// nombrada
+Rectangulo = class Rectangulo2 {
+    constructor(alto, ancho) {
+        this.alto = alto;
+        this.ancho = ancho;
+    }
+};
+console.log(Rectangulo.name); // "Rectangulo2"
+```
+
+#### Class e instanciación pseudoclásica
+
+La instanciación pseudoclásica es uno de varios patrones de instanciación de objetos a partir de clases en JS. La misma tiene como propósito reducir el volumen de tipeo requerido para crear un objeto, lo que significa que se logra una reducción significativa del código escrito.
+
+Mediante la instanciación pseudoclásica, JS hace todo lo siguiente tras bastidores:
+
+- Crea un nuevo objeto
+- Hace *binding* del `this` a ese nuevo objeto
+- Establece la propiedad del prototipo interno (`__proto__`) del nuevo objeto para que sea el prototipo de la función constructora
+- Al final de la función, si no se especifica un retorno, entonces retorna `this` (el nuevo objeto)
+
+```javascript
+// object constructor function
+function Gato(nombre) {
+    // se crea un objeto, `this`
+    this.nombre = nombre;
+    this.maullar = function() {
+        return "Mi nombre es " + this.nombre + "... ¡miau!";
+    };
+    // Devuelve el objeto `this`
+}
+const sam = new Gato("Sam");
+const kitty = new Gato("Kitty");
+console.log(sam.maullar()); // "Mi nombre es Sam... ¡miau!"
+console.log(kitty.maullar()); // "Mi nombre es Kitty... ¡miau!"
+```
+
+#### `this` en las clases
+
+Si no estamos seguros de a qué se refiere el `this` en una clase, debemos fijarnos en donde se llama el método y el objeto a la izquierda del punto. Ese es el objeto al que se refiere `this`.
+
+### Prototype
+
+Toda función en JS tiene una propiedad llamada `protoype`, la cual contiene un objeto con una propiedad `constructor` que apunta de vuelta a su función constructora. Los prototipos nos permiten definir un método una sola vez y darle acceso a todos los objetos de una misma clase a dicho método.
+
+En el siguiente ejemplo definimos una clase `Persona` y creamos un prototipo para la función `hola()`:
+
+```javascript
+class Persona {
+    constructor(nombre) {
+        this.nombre = nombre;
+    }
+    
+    Persona.prototype.hola = function() {
+        console.log("¡Hola! Mi nombre es " + this.nombre);
+    };
+
+};
+
+const david = new Persona("David");
+david.hola(); // ¡Hola! Mi nombre es David
+
+const jessi = new Persona("Jessi");
+david.hola(); // ¡Hola! Mi nombre es Jessi
+
+```
+
+De forma típica, solo definimos métodos en un prototipo y no propiedades, ya que estas últimas se almacenan en el objeto construido. Los métodos son comportamientos compartidos para que cada objeto instanciado no necesite tener su propio método. Sin embargo, cada objeto suele necesitar su propio conjunto de propiedades.
+
+#### `Object.create`
+
+El método `create` nos permite crear un nuevo objeto a partir de un prototipo especificado:
+
+```javascript
+// Creamos un objeto con un objeto vacío como prototipo
+var obj = Object.create({});
+obj; // Object()
+
+// creamos un objeto a partir un prototipo de Object
+var obj = Object.create(Object.prototype);
+
+// esto es lo mismo que crear un objeto vacío literal:
+var obj = {};
+```
+
+#### `Object.assign`
+
+El método `assign` permite asignar propiedades a un objeto pasado por parámetro:
+
+```javascript
+var obj = {};
+// no hace falta guardar el resultado porque los objetos se pasan por referencia:
+Object.assign(obj, {nombre:"David", apellido:"Martínez"});
+obj.nombre; // David
+```
+
+### Herencia clásica
+
+En la programación orientada a objetos, el concepto de herencia se refiere a la capacidad de un constructor de heredar propiedades y métodos de otro constructor (p. ej.: un objeto Gato es Mamífero antes que Gato y hereda propiedades tales como nacer, reproducirse y morir). También se define como un mecanismo mediante el cual se basa un objeto o clase en otro objeto (herencia basada en prototipos) o en otra clase (herencia basada en clases).
+
+### Herencia en JavaScript
+
+#### Herencia en funciones constructoras
+
+La herencia en las funciones constructoras de JS es basada en prototipos. De esta forma podemos generar nuestros propios constructores de los cuales heredar propiedades y métodos:
+
+```javascript
+function Persona(nombre, apellido, ciudad) {
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.ciudad = ciudad;
+}
+
+Persona.prototype.saludar() = function() {
+    console.log("Hola, soy " + this.nombre + " de " + this.ciudad);
+}
+
+var david = new Persona("David", "Martínez", "Buenos Aires");
+
+// ahora creamos una nueva clase, Alumno, la cual hereda de Persona, ya que todo Alumno es primeramente una Persona y "anidamos" los constructores mediante call()
+
+function Alumno(nombre, apellido, ciudad, curso) {
+    Persona.call(this, nombre, apellido, ciudad); // queremos que las propiedades de Persona queden bajo el objeto que va a devolver Alumno y no un nuevo objeto del constructor Persona
+    // las siguientes propiedades son propias de Alumno:
+    this.curso = curso;
+}
+
+var alberto = new Alumno("Alberto", "García", "Mendoza", "Full Stack Web Dev");
+
+alberto.curso // "Full Stack Web Dev"
+alberto.apellido // "García"
+
+// para poder usar los métodos de Persona usamos Object.create():
+
+Alumno.prototype = Object.create(Persona.prototype);
+Alumno.prototype.constructor = Alumno
+
+alberto.saludar() // "Hola, soy Alberto de Buenos Aires"
+
+```
+
+#### Herencia en ES6
+
+En JS y, en particular, en ES6/ES2015, la herencia funciona de la siguiente manera usando el mismo ejemplo anterior:
+
+```javascript
+class Persona {
+    constructor(nombre, apellido, ciudad) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.ciudad = ciudad;
+    }    
+    saludar() {
+        console.log("Hola, soy " + this.nombre + " de " + this.ciudad);
+    }
+}
+
+class Alumno extends Persona {
+    constructor(nombre, apellido, ciudad, curso) {
+        super(nombre, apellido, ciudad);
+        this.curso = curso;
+    }
+}
+
+var alberto = new Alumno("Alberto", "García", "Mendoza", "Full Stack Web Dev");
+
+alberto.saludar(); // "Hola, soy Alberto de Mendoza"
+```
