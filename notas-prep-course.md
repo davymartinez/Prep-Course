@@ -84,6 +84,12 @@
     - [Herencia en JavaScript](#herencia-en-javascript)
       - [Herencia en funciones constructoras](#herencia-en-funciones-constructoras)
       - [Herencia en ES6](#herencia-en-es6)
+  - [JavaScript VI](#javascript-vi)
+    - [Funciones callback](#funciones-callback)
+    - [Más métodos de Arrays](#más-métodos-de-arrays)
+      - [`.forEach()`](#foreach)
+      - [`.map()`](#map)
+      - [`.reduce()`](#reduce)
 
 ## Expressions vs Statements en JavaScript
 
@@ -1306,4 +1312,116 @@ class Alumno extends Persona {
 var alberto = new Alumno("Alberto", "García", "Mendoza", "Full Stack Web Dev");
 
 alberto.saludar(); // "Hola, soy Alberto de Mendoza"
+```
+
+## JavaScript VI
+
+### Funciones callback
+
+Una función *"callback"* es una función que se pasa a otra en forma de argumento, para luego ser invocada dentro de la función que la contiene para así completar algún tipo de rutina o acción. Una convención es usar `cb` como argumento para la variable que se usará como callback.
+
+```javascript
+function decirHolaAUsuario(usuario) {
+    return "Hola " + usuario + "!";
+};
+
+function decirAdiosAUsuario(usuario) {
+    return "Adiós " + usuario + "!";
+};
+
+// en la siguiente función, `cb` llamará a alguna de las dos funciones anteriores, según sea la que se le pase
+function crearSaludo(usuario, cb) {
+    return cb(usuario);
+}
+
+crearSaludo("David", decirHolaAUsuario); // "Hola David!"
+crearSaludo("David", decirAdiosAUsuario); // "Adiós David!"
+```
+
+### Más métodos de Arrays
+
+#### `.forEach()`
+
+El método `forEach()` ejecuta una función callback que se le provee y lo hace una vez por cada elemento de un array en orden ascendente según los índices del mismo. La función callback puede tomar dos argumentos: el primero es el elemento en sí y el segundo es el índice del elemento (argumento opcional). Es una alternativa a los bucles `for` en los arrays.
+
+```javascript
+const autos = ["Ford", "Chevrolet", "Toyota", "Tesla"];
+
+autos.forEach(function(elemento, indice) {
+    console.log(elemento);
+}); 
+// Ford
+// Chevrolet
+// Toyota
+// Tesla
+
+// También podemos crear una instancia de otra función para usarla como callback en un forEach():
+function mostrarMarcas(elemento) {
+    console.log(elemento);
+}
+
+autos.forEach(mostrarMarcas); // nos muestra el mismo listado anterior
+```
+
+El ejemplo anterior, usando un bucle `for` sería así:
+
+```javascript
+const autos = ["Ford", "Chevrolet", "Toyota", "Tesla"];
+
+for (var i = 0; i < autos.length; i++) {
+    console.log(autos[i]);
+};
+```
+
+#### `.map()`
+
+El método `.map()` crea un nuevo array con los resultados de haber invocado una función provista sobre cada elemento del array original. Al igual que `.forEach()`, el callback tiene el elemento y el índice de argumentos opcionales.
+
+```javascript
+const numeros = [2, 4, 8, 16];
+
+function multiplicarPorDos(elemento) {
+    return elemento * 2;
+};
+
+const triple = numeros.map(function(elemento) {
+    return elemento * 3;
+});
+
+const doble = numeros.map(multiplicarPorDos);
+
+console.log(doble); // [4, 8, 16, 32]
+console.log(triple); // [6, 12, 24, 48]
+
+```
+
+#### `.reduce()`
+
+El método `reduce()` ejecuta una función callback "reductora", suministrada por el usuario, sobre cada elemento del array y en orden, pasando el valor de retorno del cálculo sobre el elemento precedente. El resultado final de la ejecución de la reductora sobre todos los elementos es un valor único.
+
+La primera vez que se ejecuta la función callback no hay un "valor de retorno del cálculo previo". Pero se puede usar un valor inicial en su lugar, de ser suministrado. De lo contrario, se usa el elemento que esté en el índice 0 del array como el valor inicial y, así, la iteración comienza desde el siguiente elemento (índice 1 en vez de índice 0).
+
+El caso de uso más típico y fácil de entender para `.reduce()` es retornar la suma de todos los elementos de un array:
+
+```javascript
+const sumarArray = [1, 2, 3, 4];
+
+const valorInicial = 0;
+const sumarConInicial = sumarArray.reduce(function(valorPrevio, valorActual) {
+    return valorPrevio + valorActual;
+}, valorInicial)
+
+console.log(sumarConInicial); // 10
+```
+
+Otro ejemplo útil es el de crear una frase completa a partir de textos en un array, porque podemos usar `.reduce()` sobre cualquier tipo de datos, incluyendo strings:
+
+```javascript
+const palabras = ["Hola", "mi", "nombre", "es", "David"];
+
+const frase = palabras.reduce(function(acum, elemento) {
+  return acum + " " + elemento;
+}, "Frase completa:")
+
+console.log(frase); // Frase completa: Hola mi nombre es David 
 ```
