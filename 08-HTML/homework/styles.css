@@ -1,0 +1,52 @@
+body {
+    display: flex;
+    flex-direction: column;
+    background-image: url("https://picsum.photos/id/1060/1440/900.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: blur(5px);
+    }
+
+h1 {
+    color: blanchedalmond;
+}
+
+img {
+    width: 400px;
+}
+
+p {
+    color: blanchedalmond;
+    text-shadow: 3px 3px 4px slategray;
+}
+
+a {
+    color: seashell;
+}
+
+#divClass {
+    text-align: center;
+    color: seashell;
+}
+
+#spanId {
+    display: flex;
+    font-size: 18px;
+    margin: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+#thirdDiv {
+    margin: auto;
+    position: static;
+    height: 600px;
+    width: 500px;
+    background-color: blanchedalmond;
+    padding: 50px;
+    border-width: 10px;
+    border-color: darkslateblue;
+    border-style: groove;
+}
