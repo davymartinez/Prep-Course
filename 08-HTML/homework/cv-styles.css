@@ -1,0 +1,29 @@
+body {
+    margin: 50px;
+}
+
+h1 {
+    font-size: xx-large;
+}
+
+h2 {
+    color: gray;
+    padding-top: 20px;
+}
+
+h3 {
+    color: gray;
+}
+
+li {
+    padding: 2.5px;
+}
+
+em {
+    color:firebrick;
+    font-weight: bold;
+}
+
+#parrafo-padding {
+    padding-bottom: 10px;
+}
